@@ -3,22 +3,29 @@ from stats import get_num_of_char
 from stats import sort_dict_by_value
 import sys
 
+# This function parses text from a .txt file to a string
 def get_book_text(path):
     with open(path) as f:   # Opening a file and storing it in f
         return f.read()     # Returning the entire file as a string
     
+# This function prints a result to a console
 def print_bookbot(number_of_words, number_of_characters):
-    print(f'''
+    print(
+f'''
 ============ BOOKBOT ============
 Analyzing book found at books/book.txt...
 ----------- Word Count ----------
 Found {number_of_words} total words
---------- Character Count -------''')
+--------- Character Count -------'''
+)
+    
     for char in number_of_characters:
         if char["char"].isalpha():
             print(f"{char["char"]}: {char["num"]}")
+    
     print("============= END ===============")
 
+# This function checks the amount of arguments as user runs the program
 def check_arguments(argv):
     if len(argv) != 2:
         print("Usage: python3 main.py <path_to_book>")
@@ -39,6 +46,7 @@ def main():
     
     number_of_words = get_num_of_words(book)
     number_of_characters = sort_dict_by_value(get_num_of_char(book))
+
     print_bookbot(number_of_words, number_of_characters)
     
 
