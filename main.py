@@ -10,7 +10,7 @@ def get_book_text(path):
 def print_bookbot(number_of_words, number_of_characters):
     print(f'''
 ============ BOOKBOT ============
-Analyzing book found at books/frankenstein.txt...
+Analyzing book found at books/book.txt...
 ----------- Word Count ----------
 Found {number_of_words} total words
 --------- Character Count -------''')
@@ -19,10 +19,26 @@ Found {number_of_words} total words
             print(f"{char["char"]}: {char["num"]}")
     print("============= END ===============")
 
+def check_arguments(argv):
+    if len(argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
 def main():
-    frankenstein = get_book_text("books/frankenstein.txt")
-    number_of_words = get_num_of_words(frankenstein)
-    number_of_characters = sort_dict_by_value(get_num_of_char(frankenstein))
+    check_arguments(sys.argv)
+
+    # Handling different cases of incorrect usage
+    try:
+        book = get_book_text(sys.argv[1])
+    except IsADirectoryError:
+        print("You cannot use a directory!")
+        sys.exit(1)
+    except FileNotFoundError:
+        print("File not found or doesn't exist!")
+        sys.exit(1)
+    
+    number_of_words = get_num_of_words(book)
+    number_of_characters = sort_dict_by_value(get_num_of_char(book))
     print_bookbot(number_of_words, number_of_characters)
     
 
